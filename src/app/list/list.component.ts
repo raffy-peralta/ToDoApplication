@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   previousPage: any;
   pageSize: number = 5;
   i: number;
+  length: number;
   
 
   
@@ -71,6 +72,7 @@ export class ListComponent implements OnInit {
   getTasks(): void{
     this.listService.getJSON().subscribe(tasks => {
       this.tasks = tasks.todo;
+      this.length = this.tasks.length;
       // for(this.i = 0 ; this.i < this.tasks.length ; this.i++ ){
       //   this.tasks[this.i]['task'] = this.tasks[this.i]['task'].toLowerCase();
       //   console.log(this.tasks[this.i]['task']);
