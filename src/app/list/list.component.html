@@ -1,0 +1,46 @@
+<div class="center">   
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Status</th>
+                <th scope="col" (click)="sort('task')">Task</th>
+                <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        
+        <tr *ngFor="let notes of tasks  | orderBy: key : reverse | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" >
+            <th>
+                <label class="container">
+                    <input type="checkbox" [(ngModel)]="notes.checked" [checked]="checked"
+                    (click)="updateCheck(notes.task, notes.id, !notes.checked)">
+                    <span class="checkmark"></span>
+                    <span class="label success" *ngIf="notes.checked">Success</span>
+                </label>                          
+                
+                
+            </th>
+            <td>
+                <div *ngIf="editable && editId == notes.id" (keydown.esc)="status()" >
+                    <input type="text" (keydown.esc)="status()" (blur)="status()" 
+                    matInput (click)="$event.target.select()" [ngModel]="notes.task" [(ngModel)]="input"
+                    onblur="this.focus()"  (keyup.enter)="onEnter(input, notes.id, notes.checked)">
+                </div>
+                <div *ngIf="editable == false || editId != notes.id" >
+                   <div *ngIf="notes.checked" >
+                       <s> {{ notes.task }}</s>
+                   </div>
+                   <div *ngIf="!notes.checked" (blur)="status()" autofocus (dblclick)="edit(notes.id)">
+                        {{ notes.task }}
+                   </div>
+                </div>
+            </td>
+            <td>
+                <button class="exitbtn" (click)="deleteCurrent(notes.id)" >X</button>
+            </td>
+        </tr>
+    </table>
+
+    <ngb-pagination class="justify-content-center" *ngIf="tasks.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="tasks.length"></ngb-pagination>
+</div>
+
