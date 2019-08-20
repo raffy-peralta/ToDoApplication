@@ -1,21 +1,21 @@
-<div class="center">   
+<div *ngIf="tasks" class="center">   
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Status</th>
                 <th scope="col" (click)="sort('task')">Task</th>
-                <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                
                 <th scope="col">Action</th>
             </tr>
         </thead>
         
-        <tr *ngFor="let notes of tasks  | orderBy: key : reverse | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" >
+        <tr *ngFor="let notes of tasks | orderBy: key : reverse | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" >
             <th>
                 <label class="container">
-                    <input type="checkbox" [(ngModel)]="notes.checked" [checked]="checked"
-                    (click)="updateCheck(notes.task, notes.id, !notes.checked)">
+                    <input type="checkbox" [(ngModel)]="notes.status" [checked]="status"
+                    (click)="updateCheck(notes.title, notes.id, !notes.status)">
                     <span class="checkmark"></span>
-                    <span class="label success" *ngIf="notes.checked">Success</span>
+                    <span class="label success" *ngIf="notes.status">Success</span>
                 </label>                          
                 
                 
@@ -23,15 +23,15 @@
             <td>
                 <div *ngIf="editable && editId == notes.id" (keydown.esc)="status()" >
                     <input type="text" (keydown.esc)="status()" (blur)="status()" 
-                    matInput (click)="$event.target.select()" [ngModel]="notes.task" [(ngModel)]="input"
-                    onblur="this.focus()"  (keyup.enter)="onEnter(input, notes.id, notes.checked)">
+                    matInput (click)="$event.target.select()" [ngModel]="notes.title" [(ngModel)]="input"
+                    onblur="this.focus()"  (keyup.enter)="onEnter(input, notes.id, notes.status)">
                 </div>
                 <div *ngIf="editable == false || editId != notes.id" >
-                   <div *ngIf="notes.checked" >
-                       <s> {{ notes.task }}</s>
+                   <div *ngIf="notes.status" >
+                       <s> {{ notes.title }}</s>
                    </div>
-                   <div *ngIf="!notes.checked" (blur)="status()" autofocus (dblclick)="edit(notes.id)">
-                        {{ notes.task }}
+                   <div *ngIf="!notes.status" (blur)="status()" autofocus (dblclick)="edit(notes.id)">
+                        {{ notes.title }}
                    </div>
                 </div>
             </td>
@@ -41,6 +41,6 @@
         </tr>
     </table>
 
-    <ngb-pagination class="justify-content-center" *ngIf="length " [(page)]="page" [pageSize]="pageSize" [collectionSize]="length"></ngb-pagination>
+    <ngb-pagination class="justify-content-center" [(page)]="page" [pageSize]="pageSize" [collectionSize]="length"></ngb-pagination>
 </div>
 

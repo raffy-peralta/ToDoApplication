@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ListService } from '../list.service';
 import {Sort} from '@angular/material/sort';
+import { Observable } from 'rxjs';
+import { Tasks } from '../models/Tasks'; 
+import { ChildActivationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
+
+
 export class ListComponent implements OnInit {
-  data: Object;
-  tasks: Array<String>;
-  editable: boolean = false;
+  data: Tasks;
+ 
+  @Input() tasks: Tasks[];
+  editable: boolean;
   editId: number;
   input: any;
   checked: boolean;
@@ -21,36 +27,45 @@ export class ListComponent implements OnInit {
   pageSize: number = 5;
   i: number;
   length: number;
+  key: string = 'task'; //set default
+  reverse: boolean = false;
   
 
   
   constructor(private listService: ListService) {
+    console.log('list 1');
     
    }
 
   ngOnInit() {
-    this.getTasks();
-
+    console.log('list 2');
+    this.getTasks();  
+    
+    
     // this.listService.getJSON().subscribe(data => {
     //   this.listService.notes = data;
     //   console.log(this.listService.notes)
     // })
   }
+
   
   onEnter(input, id, checked){
     this.input = input;
-    this.data = {"task": input, "checked": checked};
+    this.data = {"title": input, "status": checked};
     console.log(this.data);
-    this.listService.update(this.data, id)
+    this.listService.update(this.data, id);
+    this.status();
+    this.getTasks();
+    
   }
   updateCheck(input, id, checked){
     
-    this.data = {"task": input, "checked": checked};
+    this.data = {"title": input, "status": checked};
     
     this.listService.update(this.data, id)
+    this.getTasks();
   }
-  key: string = 'task'; //set default
-  reverse: boolean = false;
+ 
   sort(key){
     this.key = key;
     this.reverse = !this.reverse;
@@ -65,21 +80,23 @@ export class ListComponent implements OnInit {
   }
 
   deleteCurrent(i: number): void{
-    this.listService.deleteCurrent(i);
+    this.listService.deleteCurrent(i).subscribe((data)=>{
+      this.getTasks();
+    });  
   }
-  
 
   getTasks(): void{
-    this.listService.getJSON().subscribe(tasks => {
-      this.tasks = tasks.todo;
+    this.listService.getJSON().subscribe((data) =>{
+      this.tasks = data;
       this.length = this.tasks.length;
-      // for(this.i = 0 ; this.i < this.tasks.length ; this.i++ ){
-      //   this.tasks[this.i]['task'] = this.tasks[this.i]['task'].toLowerCase();
-      //   console.log(this.tasks[this.i]['task']);
-      // }
-      
     });
-    // console.log
+    
+    // this.listService.getJSON().subscribe(tasks => {
+    //   // console.log(tasks);
+    //   // this.tasks = tasks;
+
+    // });
+    // // console.log
   }
 
 

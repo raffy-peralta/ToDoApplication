@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { OrderModule } from 'ngx-order-pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ListService } from './list.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,9 +25,10 @@ import { OrderModule } from 'ngx-order-pipe';
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
-    OrderModule
+    OrderModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

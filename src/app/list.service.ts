@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,19 +14,28 @@ export class ListService {
       // console.log(data);
     });
   }
-  save(data){
-    // this.notes.push(note);
-    let options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }
-    return fetch(this.baseUrl, options)
-      .then((response) => response.json)
+
     
+
+  // save(data){
+  //   // this.notes.push(note);
+    // let options = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(data)
+    // }
+  //   return fetch(this.baseUrl, options)
+  //     .then((response) => response.json)
+    
+  // }
+  save(data){
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.post(this.baseUrl, data, {headers});
   }
+  
   update(data, id){
     let options = {
       method: 'PUT',
@@ -43,21 +52,15 @@ export class ListService {
   
 
   deleteCurrent(i: number){
-    let options = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      
-    }
-    return fetch(this.baseUrl+'/'+i, options)
-      .then((response) => response.json)
-    
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.delete(this.baseUrl+'/'+i, {headers});
   }
 
-  public getJSON(): Observable<any>{
-    
-    return this.http.get('./assets/db.json');
+  getJSON(): Observable<any>{
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.get(this.baseUrl, {headers});
   }
   
 }

@@ -1,11 +1,12 @@
 <div class="center">
     <div class="container">
-        <input type="text" [(ngModel)]="entry" (keyup.enter)="enterToDo(entry)" placeholder="Enter task">        
+        <input type="text" [formControl]="entry" (keyup.enter)="enterToDo()" placeholder="Enter task">        
     </div>
     <div>
-        <button class="btn" (click)="enterToDo(entry)">Save</button>
+        <button class="btn" type="submit" (click)="enterToDo()">Save</button>
         <button class="btn" (click)="deleteAll()">Delete All</button>
     </div>
 </div>
-<app-list></app-list>
+<!-- <div *ngFor="let a of list">{{a.id}}</div> -->
+<app-list [tasks]="list"></app-list>
 
