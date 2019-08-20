@@ -88,8 +88,8 @@ export class ListComponent implements OnInit {
   }
 
   getTasks(): void{
-    this.listService.getJSON().subscribe((data) =>{
-      this.tasks = data;
+    this.listService.getJson().subscribe((data) =>{
+      this.tasks = data;      
       
     });
     

@@ -10,7 +10,7 @@ export class ListService {
   i: number;
   baseUrl = 'http://localhost:5000/todo';
   constructor(private http: HttpClient){
-    this.getJSON().subscribe(data => {
+    this.getJson().subscribe(data => {
       // console.log(data);
     });
   }
@@ -51,7 +51,7 @@ export class ListService {
     return this.http.delete(this.baseUrl+'/'+i, {headers});
   }
 
-  getJSON(): Observable<any>{
+  getJson(): Observable<any>{
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     return this.http.get(this.baseUrl, {headers});

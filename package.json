@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ikuzo":"ng serve",
-    "dota": "json-server --watch src/db.json --port 5000"
+    "dota": "json-server --watch src/db.json --port 5000",
+    "json-server": "json-server --watch src/db.json --port 5000"
   },
   "private": true,
   "dependencies": {

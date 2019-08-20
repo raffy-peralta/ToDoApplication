@@ -106,6 +106,10 @@ thead>tr>th {
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   border-radius: 5px;
 }
+small{
+   color: #c7c3a0; 
+   font-family: 'Source Sans Pro', sans-serif; 
+}
 
 .success {background-color: #4CAF50;} /* Green */
 .info {background-color: #2196F3;} /* Blue */

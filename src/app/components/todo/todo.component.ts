@@ -13,8 +13,7 @@ import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 })
 export class TodoComponent implements OnInit {
   list: Tasks[];
-  data: Tasks;
-  tasks: Observable<String>;
+  todoList: Array<String>;
 
   entry = new FormControl('',Validators.required);
 
@@ -41,8 +40,8 @@ export class TodoComponent implements OnInit {
     
   }
   deleteAll(): void{
-    this.listService.getJSON().subscribe(tasks => {this.tasks = tasks
-      this.tasks.forEach(element => {
+    this.listService.getJson().subscribe(tasks => {this.todoList = tasks
+      this.todoList.forEach(element => {
         this.listService.deleteCurrent(element['id']).subscribe((data)=>{
           this.getTasks();
         });
@@ -52,7 +51,7 @@ export class TodoComponent implements OnInit {
   }
 
   getTasks(): void{
-    this.listService.getJSON().subscribe((data)=>{
+    this.listService.getJson().subscribe((data)=>{
       this.list = data;
       console.log('todo component');
       
