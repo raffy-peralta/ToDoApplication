@@ -3,15 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TodoComponent } from './todo/todo.component';
-import { ListComponent } from './list/list.component';
+import { TodoComponent } from './components/todo/todo.component';
+import { ListComponent } from './components/list/list.component';
 import { FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { OrderModule } from 'ngx-order-pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ListService } from './list.service';
+import { ListService } from './services/list.service';
+// import { APP_INITIALIZER } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,

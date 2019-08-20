@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { ListService } from '../list.service';
+import { ListService } from '../../services/list.service';
 import {Sort} from '@angular/material/sort';
 import { Observable } from 'rxjs';
-import { Tasks } from '../models/Tasks'; 
+import { Tasks } from '../../models/Tasks'; 
 import { ChildActivationEnd } from '@angular/router';
 
 @Component({
@@ -53,17 +53,19 @@ export class ListComponent implements OnInit {
     this.input = input;
     this.data = {"title": input, "status": checked};
     console.log(this.data);
-    this.listService.update(this.data, id);
-    this.status();
-    this.getTasks();
-    
+    this.listService.update(this.data, id).subscribe((data)=>{
+      this.status();
+      this.getTasks();
+    });
   }
   updateCheck(input, id, checked){
     
     this.data = {"title": input, "status": checked};
     
-    this.listService.update(this.data, id)
-    this.getTasks();
+    this.listService.update(this.data, id).subscribe((data)=>{
+      this.getTasks();
+    });
+    
   }
  
   sort(key){
@@ -88,7 +90,7 @@ export class ListComponent implements OnInit {
   getTasks(): void{
     this.listService.getJSON().subscribe((data) =>{
       this.tasks = data;
-      this.length = this.tasks.length;
+      
     });
     
     // this.listService.getJSON().subscribe(tasks => {

@@ -37,15 +37,9 @@ export class ListService {
   }
   
   update(data, id){
-    let options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }
-    return fetch(this.baseUrl+'/'+id, options)
-      .then((response) => response.json)
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.put(this.baseUrl+'/'+id, data, {headers});
   }
   
 

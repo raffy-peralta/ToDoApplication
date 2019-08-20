@@ -21,12 +21,12 @@
                 
             </th>
             <td>
-                <div *ngIf="editable && editId == notes.id" (keydown.esc)="status()" >
+                <div  *ngIf="editable && editId == notes.id" (keydown.esc)="status()" >
                     <input type="text" (keydown.esc)="status()" (blur)="status()" 
                     matInput (click)="$event.target.select()" [ngModel]="notes.title" [(ngModel)]="input"
                     onblur="this.focus()"  (keyup.enter)="onEnter(input, notes.id, notes.status)">
                 </div>
-                <div *ngIf="editable == false || editId != notes.id" >
+                <div class="editable" *ngIf="editable == false || editId != notes.id" >
                    <div *ngIf="notes.status" >
                        <s> {{ notes.title }}</s>
                    </div>
@@ -41,6 +41,6 @@
         </tr>
     </table>
 
-    <ngb-pagination class="justify-content-center" [(page)]="page" [pageSize]="pageSize" [collectionSize]="length"></ngb-pagination>
+    <ngb-pagination *ngIf="tasks.length" class="justify-content-center" [(page)]="page" [pageSize]="pageSize" [collectionSize]="tasks.length"></ngb-pagination>
 </div>
 

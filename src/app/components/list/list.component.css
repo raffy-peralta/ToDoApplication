@@ -16,6 +16,9 @@
     cursor: pointer;
   
   }
+  .editable{
+    cursor: pointer;
+  }
 
   .justify-content-center {
     display: flex !important;

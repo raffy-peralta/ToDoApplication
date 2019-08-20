@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ListService } from '../list.service';
-import { Tasks } from '../models/Tasks'; 
+import { ListService } from '../../services/list.service';
+import { Tasks } from '../../models/Tasks'; 
 import { Observable } from 'rxjs';
 import { ListComponent } from '../list/list.component';
 import { FormControl, Validators } from '@angular/forms';
@@ -34,6 +34,7 @@ export class TodoComponent implements OnInit {
       let json = {title: this.entry.value, status: false};
       this.listService.save(json).subscribe((data)=> {
         this.getTasks();
+        this.entry = new FormControl('',Validators.required);
         console.log(data)
       });
     }
