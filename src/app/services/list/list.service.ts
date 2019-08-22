@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class ListService {
+
+  baseUrl: any = JSON.parse(localStorage.getItem('baseUrl')).baseUrl;
   notes: any[] = [];
   i: number;
-  baseUrl = 'http://localhost:5000/todo';
+
   constructor(private http: HttpClient){
     this.getJson().subscribe(data => {
       // console.log(data);
@@ -52,6 +57,7 @@ export class ListService {
   }
 
   getJson(): Observable<any>{
+
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     return this.http.get(this.baseUrl, {headers});

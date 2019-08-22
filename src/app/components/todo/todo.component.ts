@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ListService } from '../../services/list.service';
+import { ListService } from '../../services/list/list.service';
 import { Tasks } from '../../models/Tasks'; 
 import { Observable } from 'rxjs';
 import { ListComponent } from '../list/list.component';

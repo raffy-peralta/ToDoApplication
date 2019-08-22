@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,8 +11,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { OrderModule } from 'ngx-order-pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ListService } from './services/list.service';
-// import { APP_INITIALIZER } from '@angular/core';
+import { ListService } from './services/list/list.service';
+import { ConfigService, initializeApp } from './services/config/config.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,12 @@ import { ListService } from './services/list.service';
     OrderModule,
     ReactiveFormsModule
   ],
-  providers: [ListService],
+  providers: [ListService,ConfigService,{
+    provide: APP_INITIALIZER,
+    useFactory: initializeApp,
+    deps:[ConfigService],
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
